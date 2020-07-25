@@ -1,0 +1,31 @@
+<div class="card mt-3 p-3">
+  <div class="row">
+    <div class="col-md-9 col-xs-12">
+      <h4>Catálogo de productos</h4>
+    </div>
+    <div class="col-md-3 col-xs-12">
+      <div>
+        <label>¿Qué estas buscando?</label>
+        <input type="search" class="form-control" placeholder="Buscar producto">
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4 contents">
+    <div class=" col-md-3 col-xs-12 mt-3" *ngFor="let data of datas">
+      <div class="card">
+        <img src="../../assets/fotos proyecto final/imagenesBase/ajo.jpg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">Ajo</h5>
+          <h6 class="card-subtitle mt-2"><b>Precio:</b> $5</h6>
+          <p class="card-text mt-2"><b>Unidades disponibles:</b> 1000</p>
+          <div class="d-flex mt-2">
+            <button type="button" class="btn-card btn btn-primary">Ver Más</button>
+            <button type="button" class="ml-2 btn-card btn btn-warning text-white">Añadir</button>
+            <input type="number" class="ml-1 form-control input-value" min="1" value="1" max="100">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
