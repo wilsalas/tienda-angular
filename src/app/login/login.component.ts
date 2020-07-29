@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   //Declarar las variables de correo y contraseña
-  email: string
-  password: string
-  isError: string
+  email: string = ""
+  password: string = ""
+  isError: string = ""
 
   //Se inicializa el servicio en el componente
   constructor(private route: Router, private services: AuthServiceService) { }

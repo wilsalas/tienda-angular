@@ -1,48 +1,87 @@
 <div class="card mt-3 p-3">
   <div class="row">
     <div class="col-md-9 col-xs-12">
-      <h4>Catálogo de productos</h4>
+      <h4>{{title}}</h4>
     </div>
     <div class="col-md-3 col-xs-12">
-      <div>
+      <div *ngIf="title === 'Catálogo de productos'">
         <label>¿Qué estas buscando?</label>
-        <input type="search" class="form-control" placeholder="Buscar producto">
+        <input #search type="text" class="form-control" (keyup)="searchProduct(search.value)"
+          placeholder="Buscar producto">
       </div>
     </div>
   </div>
 
   <!-- All Products -->
-  <div class="row mt-4 contents-products ">
-    <div class="col-md-3 col-xs-12 mt-3" *ngFor="let data of datas">
+  <div class="row mt-4 contents-products " *ngIf="title === 'Catálogo de productos'">
+    <div class="col-md-3 col-xs-12 mt-3" *ngFor="let data of listData">
       <div class="card">
-        <img src="../../assets/fotos proyecto final/imagenesBase/ajo.jpg" class="card-img-top">
+        <img src="{{pathImg + data.name}}.jpg" class="card-img-top">
         <div class="card-body">
-          <h5 class="card-title">Ajo</h5>
-          <h6 class="card-subtitle mt-2"><b>Precio:</b> $5</h6>
-          <p class="card-text mt-2"><b>Unidades Disponibles:</b> 1000</p>
+          <h5 class="card-title">{{data.name}}</h5>
+          <h6 class="card-subtitle mt-2"><b>Precio:</b> ${{data.price}}</h6>
+          <p class="card-text mt-2"><b>Unidades Disponibles:</b> 6</p>
           <div class="d-flex mt-2">
-            <button type="button" class="btn-card btn btn-primary">Ver Más</button>
+            <button type="button" class="btn-card btn btn-primary" (click)="getDetailsProduct(data);">Ver
+              Más</button>
             <button type="button" class="ml-2 btn-card btn btn-warning text-white">Añadir</button>
             <input type="number" class="ml-1 form-control input-value" min="1" value="1" max="100">
           </div>
         </div>
       </div>
     </div>
+    <div class="col-md-12 col-xs-12 mt-3" *ngIf="listData && listData.length == 0">
+      <div class="d-flex flex-column align-items-center justify-content-center mx-auto">
+        <img class="rounded" width="120px" src="{{pathImg + 'not_result'}}.png">
+        <br>
+        <h2>¡Lo sentimos!</h2>
+        <p>No encontramos resultados para esta búsqueda</p>
+      </div>
+    </div>
   </div>
 
   <!-- Product details -->
-  <div class="row p-1 d-none">
+  <div class="row mt-4 p-1" *ngIf="title !== 'Catálogo de productos' &&  title !== 'Carrito de compras'">
     <div class="col-md-6  col-xs-12">
       <div class="img-detail rounded">
-        <img class="rounded" width="100%" src="../../assets/fotos proyecto final/imagenesBase/arandanos.jpg">
+        <img class="rounded" width="100%" src="{{pathImg + details.name}}.jpg">
       </div>
-      <button type="button" class="mt-3 btn btn-outline-secondary">Atrás</button>
+      <button type="button" class="mt-3 btn btn-outline-secondary" (click)="changeTitle('0')">Atrás</button>
     </div>
     <div class="col-md-6  col-xs-12">
-      <h6 class="mt-2"><b>Precio:</b> $5</h6>
+      <h6 class="mt-2"><b>Precio:</b> ${{details.price}}</h6>
       <p class="mt-2"><b>Unidades Disponibles:</b> 1000</p>
     </div>
   </div>
 
+  <!-- Buy Products -->
+  <div class="row" *ngIf="title === 'Carrito de compras'">
+    <div class="col-md-6 col-xs-12">
+      <ul class="list-group contents-products">
+        <li class="list-group-item" *ngFor="let data of datas">
+          <div class="row no-gutters mt-4">
+            <div class="col-md-4">
+              <img src="../../assets/fotos proyecto final/imagenesBase/arandanos.jpg" class="card-img">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Ajo</h5>
+                <h6 class="card-subtitle mt-2"><b>Precio:</b> $5</h6>
+                <p class="card-text mt-2"><b>Unidades:</b> 1000</p>
+              </div>
+            </div>
+            <p><b>Subtotal:</b> $1000</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6 col-xs-12">
+      <h4 class="mt-2"><b>Total:</b> $5</h4>
+      <div class="btn-group btn-group-toggle">
+        <button type="button" class="mt-3 btn btn-outline-secondary" (click)="changeTitle('0')">Cancelar</button>
+        <button type="button" class="mt-3 btn btn-outline-secondary" (click)="changeTitle('0')">Pagar</button>
+      </div>
+    </div>
+  </div>
 
 </div>

@@ -14,4 +14,11 @@ export class AuthServiceService {
       .map((res: Response) => res.json())  //Convertir la respuesta a formato JSON
   }
 
+  // Función de servicio de todos los productos en firebase
+  obtenerProductos() {
+    return this.http.get("https://angular-login-682a8.firebaseio.com/products.json")
+      .map((res: Response) => res.json())  //Convertir la respuesta a formato JSON
+  }
+
+
 }
