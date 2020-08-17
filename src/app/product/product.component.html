@@ -20,12 +20,12 @@
         <div class="card-body">
           <h5 class="card-title">{{data.name}}</h5>
           <h6 class="card-subtitle mt-2"><b>Precio:</b> ${{data.price}}</h6>
-          <p class="card-text mt-2"><b>Unidades Disponibles:</b> 6</p>
+          <p class="card-text mt-2"><b>Unidades Disponibles:</b> {{data.stock}}</p>
           <div class="d-flex mt-2">
             <button type="button" class="btn-card btn btn-primary" (click)="getDetailsProduct(data);">Ver
               Más</button>
-            <button type="button" class="ml-2 btn-card btn btn-warning text-white">Añadir</button>
-            <input type="number" class="ml-1 form-control input-value" min="1" value="1" max="100">
+            <button type="button" class="ml-2 btn-card btn btn-warning text-white" (click)="addProduct(data,inputAdd.value)">Añadir</button>
+            <input #inputAdd type="number" class="ml-1 form-control input-value" min="1" value="1" max="100">
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="col-md-6  col-xs-12">
       <h6 class="mt-2"><b>Precio:</b> ${{details.price}}</h6>
-      <p class="mt-2"><b>Unidades Disponibles:</b> 1000</p>
+      <p class="mt-2"><b>Unidades Disponibles:</b> {{details.stock}}</p>
     </div>
   </div>
 

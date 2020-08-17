@@ -7,3 +7,9 @@
     padding-left: 10%;
     padding-right: 10%;
 }
+
+@media screen and (max-width: 899px) {
+    .background-home {
+        padding: 0;
+    }
+}

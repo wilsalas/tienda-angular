@@ -14,7 +14,7 @@ export class ProductComponent implements OnInit {
   listData: any;
   listDataCopy: any;
   details: Object = {};
-  data: number = 0;
+  countProduct: number = 0;
 
   constructor(private servicio: AuthServiceService) { }
 
@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
   }
 
   initData() {
-    let title = localStorage.getItem('title'),
+    const title = localStorage.getItem('title'),
       details = localStorage.getItem('productDetails');
     if (title) {
       this.title = title;
@@ -57,10 +57,41 @@ export class ProductComponent implements OnInit {
     this.listData = this.listDataCopy.filter((item: any) => new RegExp(search, 'i').test(item.name));
   }
 
-  sendData() {
-    this.data += 40
-    this.eventEmitNavBar.emit(this.data)
-    console.log('reat')
+  addProduct(product: any, purchasedAmount: number = 0) {
+    let listProducts = JSON.parse(localStorage.getItem("cart"));
+    const newPurchasedAmount = Number(purchasedAmount);
+    product.id = this.listData.findIndex((item: any) => item.name === product.name);
+    product.purchasedAmount = newPurchasedAmount;
+    if (listProducts) {
+      let isAdd = false;
+      for (const item of listProducts) {
+        if (item.name === product.name) {
+          item.purchasedAmount += newPurchasedAmount;
+          isAdd = true;
+        }
+      }
+      if (!isAdd) {
+        listProducts.push(product);
+      }
+    } else {
+      listProducts = [product];
+    }
+    const indexProduct = listProducts.find((item: any) => item.name === product.name);
+    if (product.count < indexProduct.purchasedAmount) {
+      return alert("No hay suficiente cantidad del producto");
+    }
+    // console.log(listProducts);
+    localStorage.setItem("cart", JSON.stringify(listProducts));
+    this.funCountProduct(listProducts);
+  }
+
+  funCountProduct(products: any) {
+    let totalProduct = 0;
+    for (const item of products) {
+      totalProduct += item.purchasedAmount;
+    }
+    this.eventEmitNavBar.emit(totalProduct);
+    localStorage.setItem("countProduct", JSON.stringify(totalProduct));
   }
 
 }

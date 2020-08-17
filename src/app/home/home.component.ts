@@ -15,8 +15,13 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    /* Enviar la cantidad de los productos agregados al carrito */
     this.product.eventEmitNavBar.subscribe((res: number) => {
       this.navBar.countProduct = res;
+    });
+    /* Cambiar el titulo desde el navbar hacia el componente products */
+    this.navBar.eventEmitProduct.subscribe((res: string) => {
+      this.product.title = res;
     });
   }
 
