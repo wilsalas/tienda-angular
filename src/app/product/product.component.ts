@@ -13,8 +13,10 @@ export class ProductComponent implements OnInit {
   title: string = "Catálogo de productos";
   listData: any;
   listDataCopy: any;
+  listBuyData: any;
   details: Object = {};
   countProduct: number = 0;
+  totalBuyProduct: number = 0;
 
   constructor(private servicio: AuthServiceService) { }
 
@@ -24,12 +26,17 @@ export class ProductComponent implements OnInit {
 
   initData() {
     const title = localStorage.getItem('title'),
-      details = localStorage.getItem('productDetails');
+      details = localStorage.getItem('productDetails'),
+      cartDataList = localStorage.getItem("cart");
     if (title) {
       this.title = title;
     }
     if (details) {
       this.details = JSON.parse(details);
+    }
+    if (cartDataList) {
+      this.listBuyData = JSON.parse(cartDataList);
+      this.funSumSubTotal();
     }
     this.servicio.obtenerProductos().subscribe((res: any) => {
       this.listData = this.listDataCopy = res;
@@ -81,8 +88,10 @@ export class ProductComponent implements OnInit {
       return alert("No hay suficiente cantidad del producto");
     }
     // console.log(listProducts);
+    this.listBuyData = listProducts;
     localStorage.setItem("cart", JSON.stringify(listProducts));
     this.funCountProduct(listProducts);
+    this.funSumSubTotal();
   }
 
   funCountProduct(products: any) {
@@ -94,4 +103,18 @@ export class ProductComponent implements OnInit {
     localStorage.setItem("countProduct", JSON.stringify(totalProduct));
   }
 
+  funSumSubTotal() {
+    let listSubTotal = [];
+    for (const item of this.listBuyData) {
+      listSubTotal.push(item.price * item.purchasedAmount);
+    }
+    this.totalBuyProduct = listSubTotal.reduce((total, num) => total + num);
+    console.log(listSubTotal);
+  }
+
+  processToBuy() {
+    if (confirm("¿Desea realizar esta compra?")) {
+
+    }
+  }
 }

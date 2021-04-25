@@ -10,7 +10,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProductComponent } from './product/product.component';
-
+import { FormatNumberPipe } from './format-number.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,8 @@ import { ProductComponent } from './product/product.component';
     NotfoundComponent,
     HomeComponent,
     NavbarComponent,
-    ProductComponent
+    ProductComponent,
+    FormatNumberPipe
   ],
   imports: [
     BrowserModule,
